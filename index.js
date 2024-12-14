@@ -68,11 +68,26 @@ else{
 //     console.log(result);
 }
 
+const matchValues = (country, input) => {
+    return (country.name.toLowerCase().includes(input) || 
+        country.population.toString().includes(input)) ||
+        country.region.toLowerCase().includes(input) ||
+        country.capital.toLowerCase().includes(input)
+}
+const filterBySerach = (event) =>{
+    console.log("enter to filterbyserach func");
+    const input = event.target.value.toLowerCase();
+    console.log(input);
+
+    const resultBySearch = countries.filter((country)=>{
+        return matchValues(country,input);
+     })
+    console.log(resultBySearch);
+    innerDetailsIntoCards(resultBySearch);
+}
 
 
 const switchPage = (event) =>{
-
-    // event.preventDefault();
     const card = event.currentTarget;
     console.log(card.innerHTML);
     
