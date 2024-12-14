@@ -69,6 +69,26 @@ else{
 }
 
 
+
+const switchPage = (event) =>{
+
+    // event.preventDefault();
+    const card = event.currentTarget;
+    console.log(card.innerHTML);
+    
+    const titleElement = card.querySelector(".country-title").textContent;
+    const flagImage = card.querySelector(".country-flag img").src;
+    const population = card.querySelector(".country-brief li:nth-child(1)").textContent;
+    const region = card.querySelector(".country-brief li:nth-child(2)").textContent;
+    const capital = card.querySelector(".country-brief li:nth-child(3)").textContent;
+    
+    const countryInfo = {name:titleElement, flagImg:flagImage, population:population, region: region, capital:capital};
+    console.log(countryInfo);
+    localStorage.setItem("selectedCountry", JSON.stringify(countryInfo));
+    window.location.href = "details.html";
+}
+
+
 //maybe do this
 const changeColorOfPage = () =>{
     console.log("enter");
