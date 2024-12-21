@@ -29,13 +29,25 @@ const innerDetailsIntoCards = (array) => {
         const flagImage = cloneCard.querySelector(".country-flag img");
         const countryInfo = cloneCard.querySelectorAll(".country-brief li");
 
-        titleElement.innerHTML = country.name;
+        titleElement.textContent = country.name;
         flagImage.src = country.flag;
         flagImage.alt = `${country.name}`;
         
-        countryInfo[0].innerHTML = `<strong>Population:</strong> ${country.population}`;
-        countryInfo[1].innerHTML = `<strong>Region:</strong> ${country.region}`;
-        countryInfo[2].innerHTML = `<strong>Capital:</strong> ${country.capital}`;
+        countryInfo[0].textContent = "Population: ";
+        const populationStrong = document.createElement("strong");
+        populationStrong.textContent = country.population;
+        countryInfo[0].appendChild(populationStrong);
+     
+        countryInfo[1].textContent = "Region: ";
+        const regionStrong = document.createElement("strong");
+        regionStrong.textContent = country.region;
+        countryInfo[1].appendChild(regionStrong);
+
+       
+        countryInfo[2].textContent = "Capital: ";
+        const capitalStrong = document.createElement("strong");
+        capitalStrong.textContent = country.capital;
+        countryInfo[2].appendChild(capitalStrong);
 
         containerCountries.appendChild(cloneCard);
     });
@@ -46,6 +58,25 @@ const openDropDown = () => {
   console.log('enter');
   dropDown.classList.toggle("open");
 }
+
+const regions = ["All", "Africa", "Americas", "Asia", "Europe", "Oceania"];
+const createDropDownBody=()=>{
+    const dropdownBody = document.createElement("div");
+    dropdownBody.classList.add("dropdown-body");
+    const ul = document.createElement("ul");
+
+    regions.forEach((region)=>{
+        const li = document.createElement('li');
+        li.textContent = region;
+        li.setAttribute("data-region", region.toLowerCase());
+        li.setAttribute("onClick", "filterByRegion(event)");
+        ul.appendChild(li);
+    });
+    dropdownBody.appendChild(ul);
+    const dropdownWrapper = document.querySelector(".dropdown-wrapper"); 
+    dropdownWrapper.appendChild(dropdownBody); 
+}
+createDropDownBody();
 
 const filterByRegion = (event) => {
    const region = event.target.getAttribute("data-region");
@@ -76,7 +107,7 @@ const matchValues = (country, input) => {
 }
 const filterBySerach = (event) =>{
     console.log("enter to filterbyserach func");
-    const input = event.target.value.toLowerCase();
+    const input = event.target.value.toLowerCase().trim(); //ignore white spaces and make it lowercase letters
     console.log(input);
 
     const resultBySearch = countries.filter((country)=>{
@@ -105,80 +136,20 @@ const switchPage = (event) =>{
 
 
 //maybe do this
-const changeColorOfPage = () =>{
-    console.log("enter");
-    const currentColor = getComputedStyle(document.body).backgroundColor;
+// const changeColorOfPage = () =>{
+//     console.log("enter");
+//     const currentColor = getComputedStyle(document.body).backgroundColor;
     
-    if (currentColor === "rgb(33, 37, 41)") { 
-        document.body.style.backgroundColor = "rgb(255, 255, 255)";
-    } else {
-        document.body.style.backgroundColor = "rgb(33, 37, 41)";
-    }
-};
-    
-
-
-
-
-
-
-
-
-// const containerCountries = document.querySelector(".countries-grid");
-// const countryCard = document.querySelector(".country.scale-effect");
-// const cards= document.querySelectorAll(".country");
-
-// fetch('./CountriesData.json')
-//     .then((res) => {
-//         if (!res.ok) {
-//             throw new Error
-//                 (`HTTP error! Status: ${res.status}`);
-//         }
-//         return res.json();
-//     })
-//     .then((data) => {
-//         countries = data;
-//         console.log(data); 
-//         duplicateCard(); 
-//         innerTextIntoCardDetails(countries);
-//     })
-//     .catch((error) =>
-//         console.error("Unable to fetch data:", error));
-
-// const duplicateCard = () =>{
-//     const lenArray = countries.length;
-    
-//     for(i=1;i<lenArray;i++){
-//        const cloneCard = countryCard.cloneNode(true);
-//        containerCountries.appendChild(cloneCard);
+//     if (currentColor === "rgb(33, 37, 41)") { 
+//         document.body.style.backgroundColor = "rgb(255, 255, 255)";
+//     } else {
+//         document.body.style.backgroundColor = "rgb(33, 37, 41)";
 //     }
-// }
-// const innerTextIntoCardDetails = (array) =>{
-//     const cards= document.querySelectorAll(".country"); //take after the duplicate
-    
-//     for(i=0;i<countries.length;i++){
-//         const titleElement = cards[i].querySelector(".country-title");
-//         const flagImage = cards[i].querySelector(".country-flag img"); //choost the img in the selector 
-//         const countryInfo = cards[i].querySelectorAll(".country-brief li");
-        
-//         countryInfo.forEach((item)=>{
-//             const label = item.querySelector("strong").textContent.trim().replace(":", "");
-//             if(label==="population"){
-//                item.innerHTML = countries[i].population;
-//             }
-//             else if(label==="Region"){
-//                 item.innerHTML = countries[i].region;
-//              }
-//              else if(label==="capital"){
-//                 item.innerHTML = countries[i].capital;
-//              }
-//         })
-//         titleElement.innerHTML = countries[i].name;
-//         flagImage.src = countries[i].flag;
-//         flagImage.alt = `${countries[i].name}`;
-//     }
-// }
-
+// };
     
 
-    
+
+
+
+
+
